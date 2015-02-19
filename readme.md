@@ -13,13 +13,13 @@ understanding of how the information is retrieved, displayed and manipulated.
 ```json
 
 notes {
-	--unique_id {
+	unique_id {
 		author: '',
 		date: '',
 		is_read: '',
 		note: '',
 		ignored_by: {
-			--unique_id {
+			unique_id {
 				user_id: ''
 			}
 		},
@@ -32,7 +32,7 @@ notes {
 
 ```
 
-N.B. --unique_id is the randomly generated identifier from notes added by firebase during push operations.
+N.B. unique_id is the randomly generated identifier from notes added by firebase during push operations.
 
 ## Implementation
 

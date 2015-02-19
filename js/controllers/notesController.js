@@ -27,7 +27,7 @@ angular.module('notesCtrl', ['angularMoment'])
 		}, true);
 
  		// spoof userid
- 		var uid = 2;
+ 		$scope.uid = 2;
 
 
 		
@@ -49,7 +49,7 @@ angular.module('notesCtrl', ['angularMoment'])
 				{
 					// return if uid not in ignore list
 					return !_.some(note.ignore_list, function(itm){
-						return itm.id == uid;
+						return itm.id == $scope.uid;
 					});
 				}
 				return note;					
@@ -128,9 +128,9 @@ angular.module('notesCtrl', ['angularMoment'])
 				itm.ignore_list = [];
 			}
 
-			// push user id into list
+			// add user id to list
 			itm.ignore_list.push({
-				'id': uid
+				'id': $scope.uid
 			});
 
 			$scope.notes.$save(itm);
@@ -166,7 +166,7 @@ angular.module('notesCtrl', ['angularMoment'])
 		$scope.configureNoteReply = function(){
 			// check if note is locked against other user
 			if($scope.notes[$scope.selectedNote.$id].hasOwnProperty('locked') &&
-			   $scope.notes[$scope.selectedNote.$id].locked.id != uid)
+			   $scope.notes[$scope.selectedNote.$id].locked.id != $scope.uid)
 			{
 				// will replace with fancy alert or something better
 				alert('Someone is already replying to this note');
@@ -190,7 +190,7 @@ angular.module('notesCtrl', ['angularMoment'])
 		 */
 		$scope.lockNote = function(note){
 			note.locked = {
-				'id': uid
+				'id': $scope.uid
 			};
 			$scope.notes.$save(note);
 		}
@@ -214,6 +214,21 @@ angular.module('notesCtrl', ['angularMoment'])
 			// will implement ng-idle
 		}
 
+		/**
+		 * Check if particular note was ignored
+		 *
+		 */
+		$scope.wasIgnored = function(note){
+			if(note.hasOwnProperty('ignore_list'))
+			{
+				// return if uid in ignore list
+				return _.some(note.ignore_list, function(itm){
+					return itm.id == $scope.uid;
+				});
+			}
+		}
+
+
 		/*----------------------------------
 		|
 		| General functions
@@ -236,6 +251,12 @@ angular.module('notesCtrl', ['angularMoment'])
 		$scope.viewInbox = false;
 		$scope.toggleInbox = function(){
 			$scope.viewInbox = !$scope.viewInbox;
+
+			// set screen large if not already
+			if(!$scope.viewLarge)
+			{	
+				$scope.setViewSize();
+			}
 		}
 
  });

@@ -49,26 +49,29 @@
     </div>
 
     <div ng-class="{ 'notes-center': !viewLarge, 'notes-center-large': viewLarge }">
-        <div class="col-xs-12">
-            <div class="row">
-                <div class="col-xs-10">
-                    <div class="nav-header">
-                        <!-- unread messages -->
-                        <span class="glyphicon glyphicon-comment nav-icon"></span>
-                        <span class="badge nav-count  "
-                              ng-if="unreadNotes != 0">{{ unreadNotes }}</span>
-                        <span class="glyphicon glyphicon-ok no-unread"
-                              ng-if="unreadNotes == 0"></span>
-                    </div>
-                </div>  
-                <div class="col-xs-2">
-                    <!-- inbox link -->
-                    <span class="glyphicon glyphicon-list-alt inbox-icon"
-                          ng-click="toggleInbox()"></span> 
+        <!-- notes header -->
+        <div class="row">
+            <div class="col-xs-10">
+                <div class="nav-header">
+                    <!-- unread messages -->
+                    <span class="glyphicon glyphicon-comment nav-icon"></span>
+                    <span class="badge nav-count  "
+                          ng-if="unreadNotes != 0">{{ unreadNotes }}</span>
+                    <span class="glyphicon glyphicon-ok no-unread"
+                          ng-if="unreadNotes == 0"></span>
                 </div>
             </div>  
-            <br />
+            <div class="col-xs-2">
+                <!-- inbox link -->
+                <span class="glyphicon glyphicon-list-alt inbox-icon"
+                      ng-click="toggleInbox()"></span> 
+            </div>
+        </div>  
+        <br />
 
+        <!-- note actions -->
+        <div class="col-xs-12"
+             ng-show="!viewInbox">
             <!-- display note details -->
             <div class="row">  
                 <div class="col-xs-10">
@@ -122,6 +125,30 @@
                 </div>
             </div>  
         </div>
+
+        <!-- show note inbox -->
+        <div class="col-xs-12"
+             ng-show="viewInbox">
+
+            <table class="table borderless">
+                <tr ng-repeat="note in notes track by note.$id">
+                    <td>{{ note.author }}</td>
+                    <td>{{ note.date | date:'MM/dd/yyyy @ h:mma' }}</td>
+                    <td>
+                        <p ng-if="note.is_read">Read</p>
+                        <p ng-if="!note.is_read">Note Read</p>
+                        <p ng-if="wasIgnored(note)">&nbsp; (ignored)</p>
+                    </td>
+                    <td>
+                        <button class="button btn-success">
+                            View
+                        </button>
+                    </td>
+                </tr>
+            </table>
+
+        </div>
+
     </div>
 
 </div>

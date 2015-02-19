@@ -1,0 +1,90 @@
+.inbox {
+    background-color: #E5E4E2;
+}
+.inbox-nav {
+    background-color: #FFF;
+}
+
+.notes-center {
+	position:absolute;
+	bottom:5px;
+	right:5px;
+	margin:0;
+	padding:5px 3px;
+	font-family: Helvetica, Arial;
+	opacity: 0.85;
+	-ms-filter: "progid:DXImageTransform.Microsoft.Alpha(Opacity=75)";
+	filter: alpha(opacity=75);
+	width: 250px;
+	height: 200px;
+	background: #E5E4E2;
+	border: solid 2px ;
+	padding: 15px;
+	-webkit-border-radius: 10px;
+	border-radius: 10px;	
+}
+
+.inbox-icon {
+	font-size: 1.4em;
+	color: #000;
+}
+
+.nav-icon {
+    font-size: 1.4em;
+}
+
+.no-unread {
+	font-size: 1.4em;
+	color: #6CBB3C;
+}
+
+.nav-count {
+    font-size: 1em;
+    background-color: #F62817;
+}
+
+.latest-note {
+	font-size: 0.8em;
+	background-color: #FEFCFF;
+	color: #000;
+	-webkit-border-radius: 5px;
+	border-radius: 5px;
+	height: 100px;
+	margin-top:5px;
+	padding: 5px;
+}
+
+.latest-note-header {
+	font-size: 0.8em;
+	color: #55524c;
+}
+
+.note-actions {
+	margin-top: 25px;	
+}
+
+.note-action-icons {
+	float: left;
+	font-size:1.5em;
+	color: #000;
+	margin-bottom: 16px;
+	cursor: pointer;
+}
+
+.css-class-add, .css-class-remove {
+  -webkit-transition:all cubic-bezier(0.250, 0.460, 0.450, 0.940) 0.5s;
+  -moz-transition:all cubic-bezier(0.250, 0.460, 0.450, 0.940) 0.5s;
+  -o-transition:all cubic-bezier(0.250, 0.460, 0.450, 0.940) 0.5s;
+  transition:all cubic-bezier(0.250, 0.460, 0.450, 0.940) 0.5s;
+}
+
+.css-class,
+.css-class-add.css-class-add-active {
+  color: red;
+  font-size:3em;
+}
+
+.css-class-remove.css-class-remove-active {
+  font-size:1.0em;
+  color:black;
+}

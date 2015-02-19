@@ -20,7 +20,7 @@ angular.module('notesCtrl', ['angularMoment'])
  		// declare a watch to manage changes
 		$scope.$watch('notes', function(){
 			// count unread note
-			$scope.getTotalUnread();
+			$scope.setTotalUnread();
 
 			// set latest unread note
 			$scope.setLatestUnread();			
@@ -60,7 +60,7 @@ angular.module('notesCtrl', ['angularMoment'])
 		 * Count unread notes
 		 * 
 		 */
-		$scope.getTotalUnread = function(){			
+		$scope.setTotalUnread = function(){			
 			// get count of un-read notes that aren't ignored
 			$scope.unreadNotes = _.reduce($scope.filterIgnored() , function(ret, note){
 				// exit if corrupt obj
@@ -82,7 +82,7 @@ angular.module('notesCtrl', ['angularMoment'])
 		 */
 		$scope.setLatestUnread = function(){
 			// default note 
-			$scope.latestNote = {
+			$scope.selectedNote = {
 				note: 'No un-read notes'
 			};
 
@@ -97,11 +97,11 @@ angular.module('notesCtrl', ['angularMoment'])
 				// set latest note to most recent item
 				if(list.length > 0)
 				{
-					$scope.latestNote = _.last(list); 
+					$scope.selectedNote = _.last(list); 
 				} 
 
 				// set time of note to provide relativaty
-				this.time = new Date($scope.latestNote.date);	
+				this.time = new Date($scope.selectedNote.date);	
 			}		
 		}
  
@@ -137,15 +137,82 @@ angular.module('notesCtrl', ['angularMoment'])
 		};
 
 		/**
-		 * Set relevant data for response to notes
+		 * Configure vars for displaying reply
 		 *
 		 */
 		$scope.noteReply = false;
 		$scope.toggleReply = function(){
+			// toggle the view
 			$scope.noteReply = !$scope.noteReply;
+
+			// if replying
+			if($scope.noteReply)
+			{
+				// configure data for reply and check lock
+				$scope.configureNoteReply();
+			}
+			else
+			{
+				// unlock the note
+				$scope.unlockNote($scope.selectedNote);
+			}
 		}
 
+		/**
+		 * Checks for lock by other user; otherwise lock
+		 * set screen up and call to lock note
+		 *
+		 */
+		$scope.configureNoteReply = function(){
+			// check if note is locked against other user
+			if($scope.notes[$scope.selectedNote.$id].hasOwnProperty('locked') &&
+			   $scope.notes[$scope.selectedNote.$id].locked.id != uid)
+			{
+				// will replace with fancy alert or something better
+				alert('Someone is already replying to this note');
+			}	
+			else
+			{	
+				// set the view sizes
+				if(!$scope.viewLarge)
+				{	
+					$scope.setViewSize();
+				}
 
+				// set note to be locked				
+				$scope.lockNote($scope.selectedNote);
+			}	
+		}
+
+		/**
+		 * Update data store setting lock to user
+		 *
+		 */
+		$scope.lockNote = function(note){
+			note.locked = {
+				'id': uid
+			};
+			$scope.notes.$save(note);
+		}
+
+		/**
+		 * Release note from lock
+		 *
+		 */
+		$scope.unlockNote = function(note){
+			delete note.locked;
+			$scope.notes.$save(note);
+		}
+	
+
+		/**
+		 * Monitors activity and unlocks note
+		 * if user is inactive for a long time
+		 *
+		 */
+		$scope.unlockIfIdle = function(){
+			// will implement ng-idle
+		}
 
 		/*----------------------------------
 		|
@@ -157,9 +224,18 @@ angular.module('notesCtrl', ['angularMoment'])
 		 * Toggle the view size for larger notes
 		 *
 		 */
-		$scope.setView = function(){
+		$scope.setViewSize = function(){
 			$scope.viewLarge = !$scope.viewLarge;
 			$scope.noteLarge = !$scope.noteLarge;
+		}
+
+		/**
+		 * Toggle display for inbox
+		 *
+		 */
+		$scope.viewInbox = false;
+		$scope.toggleInbox = function(){
+			$scope.viewInbox = !$scope.viewInbox;
 		}
 
  });

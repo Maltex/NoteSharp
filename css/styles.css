@@ -21,12 +21,37 @@
 	border: solid 2px ;
 	padding: 15px;
 	-webkit-border-radius: 10px;
+	border-radius: 10px;
+	overflow-y: hidden !important;	
+}
+
+.notes-center-large {
+	position:absolute;
+	bottom:5px;
+	right:5px;
+	margin:0;
+	padding:5px 3px;
+	font-family: Helvetica, Arial;
+	opacity: 0.85;
+	-ms-filter: "progid:DXImageTransform.Microsoft.Alpha(Opacity=75)";
+	filter: alpha(opacity=75);
+	width: 500px;
+	height: 500px;
+	background: #E5E4E2;
+	border: solid 2px ;
+	padding: 15px;
+	-webkit-border-radius: 10px;
 	border-radius: 10px;	
 }
 
 .inbox-icon {
 	font-size: 1.4em;
 	color: #000;
+	cursor: pointer;
+}
+
+.nav-header {
+	float:left;
 }
 
 .nav-icon {
@@ -52,6 +77,21 @@
 	height: 100px;
 	margin-top:5px;
 	padding: 5px;
+	overflow-y: scroll;
+	cursor: pointer;
+}
+
+.latest-note-large {
+	font-size: 0.8em;
+	background-color: #FEFCFF;
+	color: #000;
+	-webkit-border-radius: 5px;
+	border-radius: 5px;
+	height: 400px;
+	margin-top:5px;
+	padding: 5px;
+	overflow-y: scroll;
+	cursor: pointer;
 }
 
 .latest-note-header {
@@ -69,22 +109,4 @@
 	color: #000;
 	margin-bottom: 16px;
 	cursor: pointer;
-}
-
-.css-class-add, .css-class-remove {
-  -webkit-transition:all cubic-bezier(0.250, 0.460, 0.450, 0.940) 0.5s;
-  -moz-transition:all cubic-bezier(0.250, 0.460, 0.450, 0.940) 0.5s;
-  -o-transition:all cubic-bezier(0.250, 0.460, 0.450, 0.940) 0.5s;
-  transition:all cubic-bezier(0.250, 0.460, 0.450, 0.940) 0.5s;
-}
-
-.css-class,
-.css-class-add.css-class-add-active {
-  color: red;
-  font-size:3em;
-}
-
-.css-class-remove.css-class-remove-active {
-  font-size:1.0em;
-  color:black;
 }

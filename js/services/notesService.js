@@ -3,10 +3,7 @@ angular.module('notesService', [])
 	.factory("notes", ['$firebase', '$rootScope',
 		function($firebase, $rootScope) {
 			return {
-				get: function(dataURL){
-					// create a reference to the Firebase 
-				    var ref = new Firebase(dataURL);
-
+				get: function(ref){
 				    // return syncd array
 				    return $firebase(ref).$asArray();
 				}

@@ -41,54 +41,84 @@
 <div class="container" 
      ng-app="notesApp" 
      ng-controller="notesController as nCont">
-  
-  <div class="page-header text-center">       
-    <h1>Notes, yo</h1>        
-  </div>
 
-  <div class="notes-center">
-      <div class="row">
-          <div class="col-xs-10">
-              <!-- unread messages -->
-              <span class="glyphicon glyphicon-comment nav-icon"></span>
-              <span class="badge nav-count"
-                    ng-if="unreadNotes != 0">{{ unreadNotes }}</span>
-              <span class="glyphicon glyphicon-ok no-unread"
-                    ng-if="unreadNotes == 0"></span>
-          </div>  
-          <div class="col-xs-2">
-              <!-- inbox link -->
-              <span class="glyphicon glyphicon-list-alt inbox-icon"></span> 
-          </div>
-      </div>  
-      <br />
-      <div class="row">  
-          <div class="col-xs-10">
-              <i class="latest-note-header">
-                  <b>{{ latestNote.author }}</b>
-                  &nbsp;&nbsp;
-                  -
-                  &nbsp;&nbsp;
-                  <time am-time-ago="latestNote.date" 
-                        title="{{ nCont.time | amDateFormat: 'dddd, MMMM Do YYYY, h:mm a' }}">
-                  </time>
-              </i>
-              <!-- show the note -->
-              <div class="latest-note">
-                  {{ latestNote.note }}
-              </div>
-          </div>
-          <div class="col-xs-2">
-              <div class="note-actions">
-                  <span class="glyphicon glyphicon-share-alt note-action-icons"></span> 
-                  <span class="glyphicon glyphicon-ok-circle note-action-icons"
-                        ng-click="markNoteRead(latestNote.$id)"></span> 
-                  <span class="glyphicon glyphicon-remove-circle note-action-icons"
-                        ng-click="markNoteIgnored(latestNote.$id)"></span>
-              </div>
-          </div>
-      </div>              
-  </div>
+    <!-- We will use ng-init to set the user_id in the live app -->
+    
+    <div class="page-header text-center">       
+        <h1>Notes, yo</h1>        
+    </div>
+
+    <div ng-class="{ 'notes-center': !viewLarge, 'notes-center-large': viewLarge }">
+        <div class="row">
+            <div class="col-xs-10">
+                <div class="nav-header">
+                    <!-- unread messages -->
+                    <span class="glyphicon glyphicon-comment nav-icon"></span>
+                    <span class="badge nav-count  "
+                          ng-if="unreadNotes != 0">{{ unreadNotes }}</span>
+                    <span class="glyphicon glyphicon-ok no-unread"
+                          ng-if="unreadNotes == 0"></span>
+                </div>
+            </div>  
+            <div class="col-xs-2">
+                <!-- inbox link -->
+                <span class="glyphicon glyphicon-list-alt inbox-icon"></span> 
+            </div>
+        </div>  
+        <br />
+
+        <!-- display notes -->
+        <div class="row"
+             ng-show="!noteReply">  
+            <div class="col-xs-10">
+                <i class="latest-note-header">
+                    <b>{{ latestNote.author }}</b>
+                    &nbsp;&nbsp;
+                    -
+                    &nbsp;&nbsp;
+                    <time am-time-ago="latestNote.date" 
+                          title="{{ nCont.time | amDateFormat: 'dddd, MMMM Do YYYY, h:mm a' }}">
+                    </time>
+                </i>
+                <!-- show the note -->
+                <div ng-class="{ 'latest-note': !noteLarge, 'latest-note-large': noteLarge }"
+                     ng-click="setView()">
+                    {{ latestNote.note }}
+                </div>
+            </div>
+            <div class="col-xs-2">
+                <div class="note-actions"
+                     ng-show="latestNote.$id || !noteReply">
+                    <span class="glyphicon glyphicon-share-alt note-action-icons"
+                          ng-click="toggleReply()"></span> 
+                    <br /><br />
+                    <span class="glyphicon glyphicon-ok-circle note-action-icons"
+                          ng-click="setNoteRead(latestNote.$id)"></span> 
+                    <br /><br />
+                    <span class="glyphicon glyphicon-remove-circle note-action-icons"
+                          ng-click="setNoteIgnored(latestNote.$id)"></span>
+                </div>
+            </div>
+        </div>
+
+        <!-- reply to notes -->
+        <div class="row"
+             ng-show="noteReply">  
+            <div class="col-xs-12">
+                <textarea ng-model="newNote">
+                    
+                </textarea>                
+                <button class="btn btn-danger"
+                        ng-click="noteReply = false">
+                    Cancel
+                </button>
+                <button class="btn btn-success"
+                        ng-click="addNote()">
+                    Add Note
+                </button>
+            </div>    
+        </div>         
+    </div>
 
 </div>
 
